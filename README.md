@@ -220,8 +220,8 @@ Audio features are scaffolded but not active. To enable:
 
 ## Content Note
 
-Starter sequences and meditations are based on the founder's real class plans and teaching notes. They represent actual yoga and meditation instruction, not generic placeholder content.
+Starter sequences and meditations are based on Julie Kerner's real class plans and teaching notes. They represent actual yoga and meditation instruction, not generic placeholder content.
 
 ## License
 
-Private — All rights reserved.
+Copyright in 2026 — All rights reserved.
