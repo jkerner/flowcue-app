@@ -1,10 +1,10 @@
 # FlowCue
 
-A React Native app for yoga teachers that provides real-time, karaoke-style cueing for sequences and guided meditations, with offline-first storage, reusable templates, and AI-assisted recommendations.
+A React Native app for yoga teachers that provides real-time, karaoke-style cueing for sequences and guided meditations, with offline storage, reusable templates, and AI-assisted recommendations.
 
 ## The Problem
 
-Yoga teachers are expected to teach fluidly from memory while managing timing, energy, pacing, student needs, and their own presence. When they blank on a cue, lose their place in a meditation, or fumble a transition, the moment breaks — for them and for the room.
+Yoga teachers are expected to teach from memory while managing timing, energy, pacing, student needs, and their own presence. When they blank on a cue, lose their place in a meditation, or fumble a transition, the moment breaks — for them and for the students in the room.
 
 Notes apps are too static. Paper gets lost. Memorization works until it doesn't.
 
