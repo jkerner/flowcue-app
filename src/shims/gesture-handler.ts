@@ -1,0 +1,13 @@
+export const GestureHandlerRootView = ({ children }: any) => children;
+export const Swipeable = () => null;
+export const DrawerLayout = () => null;
+export const State = {};
+export const PanGestureHandler = () => null;
+export const TapGestureHandler = () => null;
+export const FlingGestureHandler = () => null;
+export const ForceTouchGestureHandler = () => null;
+export const LongPressGestureHandler = () => null;
+export const PinchGestureHandler = () => null;
+export const RotationGestureHandler = () => null;
+export const ScrollView = require('react-native').ScrollView;
+export const FlatList = require('react-native').FlatList;
