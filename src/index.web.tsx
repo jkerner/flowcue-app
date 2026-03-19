@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
+import { Star, Flower, Moon, Ellipse, Misc, Triangle, Polygon, Wheel } from 'coolshapes-react';
 
 // ============================================================
 // FlowCue Web Preview
@@ -146,20 +147,24 @@ const formatTime = (s: number) => String(Math.floor(s / 60)).padStart(2, '0') + 
 
 function HomeScreen({ nav }: { nav: (s: string) => void }) {
   const actions = [
-    { label: 'New Sequence', icon: '\u270D\uFE0F', s: 'SequenceBuilder' },
-    { label: 'New Meditation', icon: '\uD83E\uDDD8', s: 'MeditationBuilder' },
-    { label: 'Browse Templates', icon: '\uD83D\uDCDA', s: 'Library' },
-    { label: 'AI Drafting', icon: '\u2728', s: 'AIDrafting' },
-    { label: 'Start Teaching', icon: '\u25B6\uFE0F', s: 'LiveTeach' },
+    { label: 'New Sequence', shape: React.createElement(Star, { index: 0, size: 20, noise: true }), s: 'SequenceBuilder' },
+    { label: 'New Meditation', shape: React.createElement(Moon, { index: 0, size: 20, noise: true }), s: 'MeditationBuilder' },
+    { label: 'Browse Templates', shape: React.createElement(Flower, { index: 0, size: 20, noise: true }), s: 'Library' },
+    { label: 'AI Drafting', shape: React.createElement(Polygon, { index: 0, size: 20, noise: true }), s: 'AIDrafting' },
+    { label: 'Start Teaching', shape: React.createElement(Triangle, { index: 0, size: 20, noise: true }), s: 'LiveTeach' },
   ];
   return React.createElement('div', { style: { padding: 20, overflowY: 'auto', height: '100%', backgroundColor: colors.background } },
-    React.createElement('h1', { style: { fontSize: 32, fontWeight: 700, color: colors.primary, margin: '0 0 4px 0' } }, 'FlowCue'),
-    React.createElement('p', { style: { color: colors.textSecondary, fontSize: 15, margin: '0 0 20px 0' } }, 'Your teaching companion'),
+    // Hero area with decorative shape
+    React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 12, marginBottom: 4 } },
+      React.createElement(Flower, { index: 3, size: 36, noise: true }),
+      React.createElement('h1', { style: { fontSize: 32, fontWeight: 300, color: colors.primary, margin: 0, letterSpacing: 1 } }, 'FlowCue'),
+    ),
+    React.createElement('p', { style: { color: colors.textSecondary, fontSize: 15, margin: '0 0 24px 0' } }, 'Your teaching companion'),
     React.createElement('div', { style: { display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 24 } },
       ...actions.map(a => React.createElement('button', {
         key: a.label, onClick: () => nav(a.s),
-        style: { flex: '1 1 45%', padding: '14px 12px', backgroundColor: colors.surface, border: '1px solid ' + colors.border, borderRadius: 12, cursor: 'pointer', textAlign: 'left' as const, fontSize: 14, fontWeight: 500, color: colors.primary, fontFamily: 'inherit' }
-      }, a.icon + ' ' + a.label))
+        style: { flex: '1 1 45%', padding: '14px 12px', backgroundColor: colors.surface, border: '1px solid ' + colors.border, borderRadius: 12, cursor: 'pointer', textAlign: 'left' as const, fontSize: 14, fontWeight: 500, color: colors.primary, fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: 8 }
+      }, a.shape, a.label))
     ),
     React.createElement('h3', { style: { fontSize: 16, fontWeight: 600, margin: '0 0 12px 0', color: colors.textPrimary } }, 'Recent Content'),
     ...SEQUENCES.slice(0, 2).map(s => React.createElement('div', { key: s.id, onClick: () => nav('SequenceDetail'), style: card() },
@@ -356,16 +361,16 @@ function AIDraftingScreen() {
 
 function SettingsScreen() {
   const items = [
-    { title: 'Audio Configuration', desc: 'Agora audio is not configured. Add your App ID to enable live streaming.', icon: '\uD83D\uDD0A' },
-    { title: 'AI Provider', desc: 'Current: Mock AI. Claude API integration coming soon.', icon: '\u2728' },
-    { title: 'Offline & Storage', desc: 'All content stored locally. Offline-first architecture.', icon: '\uD83D\uDCF1' },
-    { title: 'Developer', desc: 'Reset demo data, clear cache, view logs.', icon: '\uD83D\uDD27' },
-    { title: 'About', desc: 'FlowCue v0.1.0 \u2014 Built for yoga teachers, by a yoga teacher.', icon: '\uD83D\uDC9A' },
+    { title: 'Audio Configuration', desc: 'Agora audio is not configured. Add your App ID to enable live streaming.', shape: React.createElement(Ellipse, { index: 0, size: 22, noise: true }) },
+    { title: 'AI Provider', desc: 'Current: Mock AI. Claude API integration coming soon.', shape: React.createElement(Polygon, { index: 2, size: 22, noise: true }) },
+    { title: 'Offline & Storage', desc: 'All content stored locally. Offline-first architecture.', shape: React.createElement(Misc, { index: 0, size: 22, noise: true }) },
+    { title: 'Developer', desc: 'Reset demo data, clear cache, view logs.', shape: React.createElement(Star, { index: 3, size: 22, noise: true }) },
+    { title: 'About', desc: 'FlowCue v0.1.0 \u2014 Built for yoga teachers, by a yoga teacher.', shape: React.createElement(Flower, { index: 3, size: 22, noise: true }) },
   ];
   return React.createElement('div', { style: { height: '100%', overflowY: 'auto', padding: 16, backgroundColor: colors.background } },
     ...items.map(s => React.createElement('div', { key: s.title, style: card({ cursor: 'default' }) },
       React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 } },
-        React.createElement('span', { style: { fontSize: 18 } }, s.icon),
+        s.shape,
         React.createElement('h4', { style: { fontSize: 15, fontWeight: 600, margin: 0, color: colors.textPrimary } }, s.title)),
       React.createElement('p', { style: { fontSize: 13, color: colors.textSecondary, lineHeight: 1.5, margin: 0 } }, s.desc)
     ))
@@ -421,11 +426,17 @@ function App() {
 
   const showHeader = !IMMERSIVE.includes(current);
   const showTabs = !['LiveTeach', 'MeditationMode'].includes(current);
-  const tabItems: { screen: Screen; icon: string; label: string }[] = [
-    { screen: 'Home', icon: '\uD83C\uDFE0', label: 'Home' },
-    { screen: 'Library', icon: '\uD83D\uDCDA', label: 'Library' },
-    { screen: 'AIDrafting', icon: '\u2728', label: 'AI' },
-    { screen: 'Settings', icon: '\u2699\uFE0F', label: 'Settings' },
+  const tabShapes = {
+    Home: React.createElement(Flower, { index: 3, size: 22, noise: true }),
+    Library: React.createElement(Moon, { index: 0, size: 22, noise: true }),
+    AIDrafting: React.createElement(Polygon, { index: 0, size: 22, noise: true }),
+    Settings: React.createElement(Star, { index: 3, size: 22, noise: true }),
+  };
+  const tabItems: { screen: Screen; label: string }[] = [
+    { screen: 'Home', label: 'Home' },
+    { screen: 'Library', label: 'Library' },
+    { screen: 'AIDrafting', label: 'AI' },
+    { screen: 'Settings', label: 'Settings' },
   ];
 
   return React.createElement('div', { style: { width: 390, height: 844, backgroundColor: colors.background, borderRadius: 40, overflow: 'hidden', border: '6px solid ' + colors.surfaceAlt, display: 'flex', flexDirection: 'column' as const, boxShadow: '0 10px 40px rgba(0,0,0,0.5)' } },
@@ -440,7 +451,7 @@ function App() {
         key: tab.screen, onClick: () => setHistory([{ screen: tab.screen }]),
         style: { flex: 1, display: 'flex', flexDirection: 'column' as const, alignItems: 'center', gap: 2, background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0' }
       },
-        React.createElement('span', { style: { fontSize: 20 } }, tab.icon),
+        React.createElement('span', { style: { opacity: current === tab.screen ? 1 : 0.5 } }, tabShapes[tab.screen as keyof typeof tabShapes]),
         React.createElement('span', { style: { fontSize: 11, color: current === tab.screen ? colors.primary : colors.textSecondary, fontWeight: current === tab.screen ? 600 : 400 } }, tab.label)
       ))
     )

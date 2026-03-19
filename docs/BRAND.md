@@ -89,6 +89,40 @@ Typography feels like it belongs in a well-designed journal — legible in low l
 
 Think: the observatory image — that is the exact visual register. Sacred geometry, hand-drawn quality, warm on dark.
 
+### Abstract Shape Assets — CoolShapes
+
+All decorative shapes and icons use **CoolShapes** — an open-source set of 100+ abstract shapes with grainy gradients by @realvjy.
+
+- **Source:** [coolshap.es](https://coolshap.es)
+- **Figma:** [CoolShapes Community File](https://www.figma.com/design/WS8VjPujhK5QSnXxNViHHd/Cool-Shapes---100--abstract-shapes--Community-?node-id=39-2222)
+- **React package:** `coolshapes-react`
+- **License:** MIT
+
+**Available shape types:** Star (13), Flower (16), Moon (8), Ellipse (9), Triangle (14), Polygon (15), Wheel (12), Rectangle (11), Misc (7), Number (10)
+
+**Usage in FlowCue:**
+
+| Context | Shape | Props |
+|---|---|---|
+| App logo / home hero | `Flower` index 3 | `size={36} noise={true}` |
+| Tab: Home | `Flower` index 3 | `size={22} noise={true}` |
+| Tab: Library | `Moon` index 0 | `size={22} noise={true}` |
+| Tab: AI | `Polygon` index 0 | `size={22} noise={true}` |
+| Tab: Settings | `Star` index 3 | `size={22} noise={true}` |
+| Action: New Sequence | `Star` index 0 | `size={20} noise={true}` |
+| Action: New Meditation | `Moon` index 0 | `size={20} noise={true}` |
+| Action: Templates | `Flower` index 0 | `size={20} noise={true}` |
+| Action: AI Drafting | `Polygon` index 0 | `size={20} noise={true}` |
+| Action: Start Teaching | `Triangle` index 0 | `size={20} noise={true}` |
+| Settings cards | Various shapes | `size={22} noise={true}` |
+
+**Rules:**
+- Always use `noise={true}` for the grainy gradient effect
+- Keep shapes small (20–36px) in UI contexts — they are accents, not illustrations
+- One shape per card or action item maximum
+- No emojis anywhere in the app — use CoolShapes instead
+- Shapes replace icons; they should feel organic, not geometric/corporate
+
 ### Motion
 
 - **Breath animations:** slow, looping circles that expand and contract — Insight Timer's breathing orb is the north star
