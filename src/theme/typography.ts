@@ -1,54 +1,96 @@
 import { Platform } from 'react-native';
 
-const fontFamily =
+const headerFont =
   Platform.select({
-    ios: 'System',
-    android: 'Roboto',
-  }) ?? 'System';
+    ios: 'Cormorant Garamond',
+    android: 'Cormorant Garamond',
+  }) ?? 'Cormorant Garamond';
+
+const bodyFont =
+  Platform.select({
+    ios: 'DM Sans',
+    android: 'DM Sans',
+  }) ?? 'DM Sans';
+
+const cueFont =
+  Platform.select({
+    ios: 'Lora',
+    android: 'Lora',
+  }) ?? 'Lora';
 
 export const typography = {
-  h1: { fontFamily, fontSize: 28, fontWeight: '700' as const, lineHeight: 36 },
-  h2: { fontFamily, fontSize: 22, fontWeight: '600' as const, lineHeight: 28 },
-  h3: { fontFamily, fontSize: 18, fontWeight: '600' as const, lineHeight: 24 },
+  h1: {
+    fontFamily: headerFont,
+    fontSize: 28,
+    fontWeight: '300' as const,
+    lineHeight: 36,
+    letterSpacing: 1.2,
+  },
+  h2: {
+    fontFamily: headerFont,
+    fontSize: 22,
+    fontWeight: '400' as const,
+    lineHeight: 28,
+    letterSpacing: 0.8,
+  },
+  h3: {
+    fontFamily: headerFont,
+    fontSize: 18,
+    fontWeight: '400' as const,
+    lineHeight: 24,
+    letterSpacing: 0.6,
+  },
   body: {
-    fontFamily,
+    fontFamily: bodyFont,
     fontSize: 16,
     fontWeight: '400' as const,
     lineHeight: 24,
   },
   bodySmall: {
-    fontFamily,
+    fontFamily: bodyFont,
     fontSize: 14,
     fontWeight: '400' as const,
     lineHeight: 20,
   },
   caption: {
-    fontFamily,
+    fontFamily: bodyFont,
     fontSize: 12,
     fontWeight: '400' as const,
     lineHeight: 16,
   },
   label: {
-    fontFamily,
-    fontSize: 14,
+    fontFamily: bodyFont,
+    fontSize: 12,
     fontWeight: '500' as const,
-    lineHeight: 20,
+    lineHeight: 16,
+    letterSpacing: 1.0,
+    textTransform: 'uppercase' as const,
   },
-  // Live mode - extra large for glanceability
+  // Cue script - Lora italic for in-practice read-aloud feel
+  cueScript: {
+    fontFamily: cueFont,
+    fontSize: 18,
+    fontWeight: '400' as const,
+    fontStyle: 'italic' as const,
+    lineHeight: 28,
+  },
+  // Live mode - Lora italic, extra large for glanceability
   liveCue: {
-    fontFamily,
+    fontFamily: cueFont,
     fontSize: 32,
-    fontWeight: '600' as const,
+    fontWeight: '400' as const,
+    fontStyle: 'italic' as const,
     lineHeight: 42,
   },
   livePreview: {
-    fontFamily,
+    fontFamily: cueFont,
     fontSize: 20,
     fontWeight: '400' as const,
+    fontStyle: 'italic' as const,
     lineHeight: 28,
   },
   button: {
-    fontFamily,
+    fontFamily: bodyFont,
     fontSize: 16,
     fontWeight: '600' as const,
     lineHeight: 24,

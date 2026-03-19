@@ -1,43 +1,43 @@
 export const colors = {
-  // Primary - warm sage green
-  primary: '#7C9A82',
-  primaryLight: '#A8C5AE',
-  primaryDark: '#5A7A60',
+  // Primary accent - Rose Ash
+  primary: '#C4907A',
+  primaryLight: '#D4A08A',
+  primaryDark: '#A47060',
 
-  // Neutrals
-  background: '#FAFAF8',
-  surface: '#FFFFFF',
-  surfaceAlt: '#F5F3F0',
-  border: '#E8E5E0',
-  borderLight: '#F0EDE8',
+  // Backgrounds - dark only
+  background: '#1A1F2E',    // Deep Indigo
+  surface: '#141824',       // Night Slate
+  surfaceAlt: '#0E1019',    // Deep Shadow
+  border: '#2A2F3E',
+  borderLight: '#232838',
 
-  // Text
-  textPrimary: '#2D2D2D',
-  textSecondary: '#6B6B6B',
-  textTertiary: '#9B9B9B',
-  textInverse: '#FFFFFF',
+  // Text - Warm Pearl & Muted Sage
+  textPrimary: '#EDE8DF',   // Warm Pearl
+  textSecondary: '#7A8C7E', // Muted Sage
+  textTertiary: '#5A6A5E',  // Dimmer sage
+  textInverse: '#1A1F2E',
 
-  // Accents
-  accent: '#C4956A',
-  accentLight: '#E8D5C0',
+  // Accents - Ember
+  accent: '#D4845A',
+  accentLight: '#E4946A',
 
-  // Live mode - high contrast
-  liveBackground: '#1A1A2E',
-  liveCueText: '#FFFFFF',
-  liveCueNext: '#A0A0B0',
-  liveCuePrev: '#606070',
-  liveAccent: '#7C9A82',
+  // Live mode
+  liveBackground: '#0E1019', // Deep Shadow
+  liveCueText: '#EDE8DF',    // Warm Pearl
+  liveCueNext: '#7A8C7E',    // Muted Sage
+  liveCuePrev: '#5A6A5E',
+  liveAccent: '#C4907A',     // Rose Ash
 
   // Status
-  success: '#7C9A82',
-  warning: '#D4A574',
+  success: '#7A8C7E',
+  warning: '#D4845A',
   error: '#C47070',
   info: '#7094AA',
 
   // Source type badges
   templateBadge: '#7094AA',
-  userOwnedBadge: '#7C9A82',
-  duplicatedBadge: '#C4956A',
+  userOwnedBadge: '#7A8C7E',
+  duplicatedBadge: '#C4907A',
   aiGeneratedBadge: '#9B7CB0',
 } as const;
 

@@ -5,7 +5,8 @@ export const spacing = {
   lg: 24,
   xl: 32,
   xxl: 48,
-  screenPadding: 20,
+  screenPadding: 24,
+  breathingRoom: 40,
 } as const;
 
 export type SpacingToken = keyof typeof spacing;

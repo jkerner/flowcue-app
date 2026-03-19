@@ -4,17 +4,41 @@ import ReactDOM from 'react-dom/client';
 // ============================================================
 // FlowCue Web Preview
 // Self-contained web preview — no native module dependencies
+// Brand: "Refined sacred minimalism" — dark-only, candle-lit shala
 // ============================================================
 
+const css = `
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; background: #0E1019; overflow: hidden; }
+  #root { height: 100vh; display: flex; align-items: center; justify-content: center; }
+  input, textarea { color: #EDE8DF; }
+  input::placeholder, textarea::placeholder { color: #5A6A5E; }
+`;
+
+// Inject global styles
+const styleEl = document.createElement('style');
+styleEl.textContent = css;
+document.head.appendChild(styleEl);
+
 const colors = {
-  primary: '#7C9A82', primaryLight: '#A8C5AE', primaryDark: '#5A7A60',
-  background: '#FAFAF8', surface: '#FFFFFF', surfaceAlt: '#F5F3F0',
-  border: '#E8E5E0', textPrimary: '#2D2D2D', textSecondary: '#6B6B6B',
-  textTertiary: '#9B9B9B', accent: '#C4956A',
-  liveBackground: '#1A1A2E', liveCueText: '#FFFFFF', liveCueNext: '#A0A0B0',
-  liveCuePrev: '#606070', liveAccent: '#7C9A82',
-  templateBadge: '#7094AA', userOwnedBadge: '#7C9A82',
-  duplicatedBadge: '#C4956A', aiGeneratedBadge: '#9B7CB0',
+  primary: '#C4907A',      // Rose Ash — accent
+  background: '#1A1F2E',   // Deep Indigo — primary bg
+  surface: '#141824',       // Night Slate — cards
+  surfaceAlt: '#0E1019',   // Deep Shadow — overlays
+  border: '#2A2F3E',       // subtle border
+  textPrimary: '#EDE8DF',  // Warm Pearl
+  textSecondary: '#7A8C7E', // Muted Sage
+  textTertiary: '#5A6A5E', // dimmer sage
+  accent: '#D4845A',       // Ember — CTAs, timers
+  liveBackground: '#0E1019',
+  liveCueText: '#EDE8DF',
+  liveCueNext: '#7A8C7E',
+  liveCuePrev: '#5A6A5E',
+  liveAccent: '#C4907A',
+  templateBadge: '#7094AA',
+  userOwnedBadge: '#7A8C7E',
+  duplicatedBadge: '#C4907A',
+  aiGeneratedBadge: '#9B7CB0',
 };
 
 // -- Mock Data --
@@ -99,11 +123,11 @@ const badge = (type: string) => {
     ai_generated: { bg: colors.aiGeneratedBadge, label: 'AI Generated' },
   };
   const c = map[type] || map.template;
-  return React.createElement('span', { style: { display: 'inline-block', padding: '2px 8px', borderRadius: 10, backgroundColor: c.bg, color: 'white', fontSize: 11, fontWeight: 500 } }, c.label);
+  return React.createElement('span', { style: { display: 'inline-block', padding: '2px 8px', borderRadius: 10, backgroundColor: c.bg, color: '#EDE8DF', fontSize: 11, fontWeight: 500 } }, c.label);
 };
 
-const cueColor: Record<string, string> = { alignment: '#7C9A82', transition: '#C4956A', breath: '#7094AA', meditation: '#9B7CB0', grounding: '#5A7A60' };
-const dot = (type: string) => React.createElement('span', { style: { display: 'inline-block', width: 8, height: 8, borderRadius: 4, backgroundColor: cueColor[type] || '#999', marginRight: 6 } });
+const cueColor: Record<string, string> = { alignment: '#C4907A', transition: '#D4845A', breath: '#7094AA', meditation: '#9B7CB0', grounding: '#7A8C7E' };
+const dot = (type: string) => React.createElement('span', { style: { display: 'inline-block', width: 8, height: 8, borderRadius: 4, backgroundColor: cueColor[type] || '#5A6A5E', marginRight: 6 } });
 
 const card = (style?: React.CSSProperties): React.CSSProperties => ({
   backgroundColor: colors.surface, borderRadius: 12, padding: 14, marginBottom: 10,
@@ -112,7 +136,7 @@ const card = (style?: React.CSSProperties): React.CSSProperties => ({
 
 const btn = (filled: boolean, extra?: React.CSSProperties): React.CSSProperties => ({
   padding: '10px 20px', borderRadius: 10, border: filled ? 'none' : '1px solid ' + colors.primary,
-  backgroundColor: filled ? colors.primary : 'transparent', color: filled ? 'white' : colors.primary,
+  backgroundColor: filled ? colors.accent : 'transparent', color: filled ? '#EDE8DF' : colors.primary,
   fontWeight: 600, fontSize: 14, cursor: 'pointer', fontFamily: 'inherit', ...extra,
 });
 
@@ -128,18 +152,18 @@ function HomeScreen({ nav }: { nav: (s: string) => void }) {
     { label: 'AI Drafting', icon: '\u2728', s: 'AIDrafting' },
     { label: 'Start Teaching', icon: '\u25B6\uFE0F', s: 'LiveTeach' },
   ];
-  return React.createElement('div', { style: { padding: 20, overflowY: 'auto', height: '100%' } },
+  return React.createElement('div', { style: { padding: 20, overflowY: 'auto', height: '100%', backgroundColor: colors.background } },
     React.createElement('h1', { style: { fontSize: 32, fontWeight: 700, color: colors.primary, margin: '0 0 4px 0' } }, 'FlowCue'),
     React.createElement('p', { style: { color: colors.textSecondary, fontSize: 15, margin: '0 0 20px 0' } }, 'Your teaching companion'),
     React.createElement('div', { style: { display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 24 } },
       ...actions.map(a => React.createElement('button', {
         key: a.label, onClick: () => nav(a.s),
-        style: { flex: '1 1 45%', padding: '14px 12px', backgroundColor: colors.surface, border: '1px solid ' + colors.border, borderRadius: 12, cursor: 'pointer', textAlign: 'left' as const, fontSize: 14, fontWeight: 500, color: colors.textPrimary, fontFamily: 'inherit' }
+        style: { flex: '1 1 45%', padding: '14px 12px', backgroundColor: colors.surface, border: '1px solid ' + colors.border, borderRadius: 12, cursor: 'pointer', textAlign: 'left' as const, fontSize: 14, fontWeight: 500, color: colors.primary, fontFamily: 'inherit' }
       }, a.icon + ' ' + a.label))
     ),
-    React.createElement('h3', { style: { fontSize: 16, fontWeight: 600, margin: '0 0 12px 0' } }, 'Recent Content'),
+    React.createElement('h3', { style: { fontSize: 16, fontWeight: 600, margin: '0 0 12px 0', color: colors.textPrimary } }, 'Recent Content'),
     ...SEQUENCES.slice(0, 2).map(s => React.createElement('div', { key: s.id, onClick: () => nav('SequenceDetail'), style: card() },
-      React.createElement('div', { style: { fontWeight: 600, fontSize: 15, marginBottom: 4 } }, s.title),
+      React.createElement('div', { style: { fontWeight: 600, fontSize: 15, marginBottom: 4, color: colors.textPrimary } }, s.title),
       React.createElement('div', { style: { display: 'flex', gap: 8, alignItems: 'center', fontSize: 13, color: colors.textSecondary } },
         s.style, ' \u2022 ', s.duration + ' min ', badge(s.sourceType))
     ))
@@ -149,7 +173,7 @@ function HomeScreen({ nav }: { nav: (s: string) => void }) {
 function LibraryScreen({ nav }: { nav: (s: string) => void }) {
   const [tab, setTab] = useState('sequences');
   const tabs = ['sequences', 'meditations', 'templates'];
-  return React.createElement('div', { style: { height: '100%', display: 'flex', flexDirection: 'column' as const } },
+  return React.createElement('div', { style: { height: '100%', display: 'flex', flexDirection: 'column' as const, backgroundColor: colors.background } },
     React.createElement('div', { style: { display: 'flex', borderBottom: '1px solid ' + colors.border, backgroundColor: colors.surface } },
       ...tabs.map(t => React.createElement('button', {
         key: t, onClick: () => setTab(t),
@@ -158,15 +182,15 @@ function LibraryScreen({ nav }: { nav: (s: string) => void }) {
     ),
     React.createElement('div', { style: { flex: 1, overflowY: 'auto', padding: 16 } },
       tab === 'sequences' && SEQUENCES.map(s => React.createElement('div', { key: s.id, onClick: () => nav('SequenceDetail'), style: card() },
-        React.createElement('div', { style: { fontWeight: 600, fontSize: 15, marginBottom: 4 } }, s.title),
+        React.createElement('div', { style: { fontWeight: 600, fontSize: 15, marginBottom: 4, color: colors.textPrimary } }, s.title),
         React.createElement('div', { style: { display: 'flex', gap: 8, alignItems: 'center', fontSize: 13, color: colors.textSecondary } }, s.style, ' \u2022 ', s.duration + ' min ', badge(s.sourceType))
       )),
       tab === 'meditations' && MEDITATIONS.map(m => React.createElement('div', { key: m.id, onClick: () => nav('MeditationDetail'), style: card() },
-        React.createElement('div', { style: { fontWeight: 600, fontSize: 15, marginBottom: 4 } }, m.title),
+        React.createElement('div', { style: { fontWeight: 600, fontSize: 15, marginBottom: 4, color: colors.textPrimary } }, m.title),
         React.createElement('div', { style: { display: 'flex', gap: 8, alignItems: 'center', fontSize: 13, color: colors.textSecondary } }, m.category, ' \u2022 ', m.duration + ' min ', badge(m.sourceType))
       )),
       tab === 'templates' && [...SEQUENCES.filter(s => s.sourceType === 'template'), ...MEDITATIONS.filter(m => m.sourceType === 'template')].map((t: any, i) => React.createElement('div', { key: i, style: card({ cursor: 'default' }) },
-        React.createElement('div', { style: { fontWeight: 600, fontSize: 15, marginBottom: 4 } }, t.title),
+        React.createElement('div', { style: { fontWeight: 600, fontSize: 15, marginBottom: 4, color: colors.textPrimary } }, t.title),
         React.createElement('div', { style: { display: 'flex', gap: 8, alignItems: 'center', fontSize: 13, color: colors.textSecondary, marginBottom: 8 } }, (t.style || t.category), ' \u2022 ', t.duration + ' min ', badge('template')),
         React.createElement('button', { style: { ...btn(false), fontSize: 13, padding: '6px 14px' } }, 'Duplicate to My Library')
       ))
@@ -177,8 +201,8 @@ function LibraryScreen({ nav }: { nav: (s: string) => void }) {
 function SequenceDetailScreen({ nav }: { nav: (s: string) => void }) {
   const seq = SEQUENCES[0];
   const sections = [...new Set(CUES.map(c => c.section))];
-  return React.createElement('div', { style: { height: '100%', overflowY: 'auto', padding: 16 } },
-    React.createElement('h2', { style: { fontSize: 20, fontWeight: 700, margin: '0 0 6px 0' } }, seq.title),
+  return React.createElement('div', { style: { height: '100%', overflowY: 'auto', padding: 16, backgroundColor: colors.background } },
+    React.createElement('h2', { style: { fontSize: 20, fontWeight: 700, margin: '0 0 6px 0', color: colors.textPrimary } }, seq.title),
     React.createElement('div', { style: { display: 'flex', gap: 8, alignItems: 'center', fontSize: 13, color: colors.textSecondary, marginBottom: 8 } }, seq.style, ' \u2022 ', seq.duration + ' min ', badge(seq.sourceType)),
     React.createElement('p', { style: { fontSize: 14, color: colors.textSecondary, lineHeight: 1.5, margin: '0 0 12px 0' } }, seq.description),
     React.createElement('div', { style: { display: 'flex', gap: 8, marginBottom: 16 } },
@@ -190,7 +214,7 @@ function SequenceDetailScreen({ nav }: { nav: (s: string) => void }) {
       ...CUES.filter(c => c.section === section).map((cue, i) => React.createElement('div', { key: i, style: { backgroundColor: colors.surface, borderRadius: 10, padding: 12, marginBottom: 6, border: '1px solid ' + colors.border } },
         React.createElement('div', { style: { display: 'flex', alignItems: 'center', marginBottom: 4 } },
           dot(cue.type),
-          React.createElement('span', { style: { fontWeight: 600, fontSize: 14 } }, cue.pose),
+          React.createElement('span', { style: { fontWeight: 600, fontSize: 14, color: colors.textPrimary } }, cue.pose),
           cue.breaths > 0 && React.createElement('span', { style: { marginLeft: 'auto', fontSize: 12, color: colors.textTertiary } }, cue.breaths + ' breaths')
         ),
         React.createElement('p', { style: { fontSize: 13, color: colors.textSecondary, lineHeight: 1.4, margin: 0 } }, cue.text)
@@ -201,16 +225,16 @@ function SequenceDetailScreen({ nav }: { nav: (s: string) => void }) {
 
 function MeditationDetailScreen({ nav }: { nav: (s: string) => void }) {
   const med = MEDITATIONS[0];
-  return React.createElement('div', { style: { height: '100%', overflowY: 'auto', padding: 16 } },
-    React.createElement('h2', { style: { fontSize: 20, fontWeight: 700, margin: '0 0 6px 0' } }, med.title),
+  return React.createElement('div', { style: { height: '100%', overflowY: 'auto', padding: 16, backgroundColor: colors.background } },
+    React.createElement('h2', { style: { fontSize: 20, fontWeight: 700, margin: '0 0 6px 0', color: colors.textPrimary } }, med.title),
     React.createElement('div', { style: { display: 'flex', gap: 8, alignItems: 'center', fontSize: 13, color: colors.textSecondary, marginBottom: 12 } }, med.category, ' \u2022 ', med.duration + ' min ', badge(med.sourceType)),
     React.createElement('div', { style: { display: 'flex', gap: 8, marginBottom: 16 } },
       React.createElement('button', { onClick: () => nav('MeditationMode'), style: { ...btn(true), flex: 1 } }, 'Start Meditation Mode'),
       React.createElement('button', { style: btn(false) }, 'Duplicate')
     ),
-    React.createElement('h4', { style: { fontSize: 14, fontWeight: 600, marginBottom: 10 } }, 'Script Preview'),
+    React.createElement('h4', { style: { fontSize: 14, fontWeight: 600, marginBottom: 10, color: colors.textPrimary } }, 'Script Preview'),
     ...MED_CHUNKS.map((ch, i) => React.createElement('div', { key: i, style: { backgroundColor: colors.surface, borderRadius: 10, padding: 14, marginBottom: 8, border: '1px solid ' + colors.border } },
-      React.createElement('p', { style: { fontSize: 14, lineHeight: 1.6, margin: 0 } }, ch.text),
+      React.createElement('p', { style: { fontSize: 14, lineHeight: 1.6, margin: 0, color: colors.textPrimary } }, ch.text),
       React.createElement('span', { style: { fontSize: 11, color: colors.textTertiary, marginTop: 4, display: 'block' } }, 'pause ' + ch.pause + 's')
     ))
   );
@@ -238,32 +262,32 @@ function LiveTeachScreen({ nav }: { nav: (s: string) => void }) {
       prev && React.createElement('p', { style: { fontSize: 15, color: colors.liveCuePrev, textAlign: 'center' as const, marginBottom: 24, opacity: 0.5 } }, prev.text),
       React.createElement('div', { style: { textAlign: 'center' as const, marginBottom: 24 } },
         React.createElement('p', { style: { fontSize: 13, color: colors.liveAccent, marginBottom: 6, fontWeight: 600 } }, cur?.pose),
-        React.createElement('p', { style: { fontSize: 26, fontWeight: 600, lineHeight: 1.4 } }, cur?.text),
+        React.createElement('p', { style: { fontSize: 26, fontWeight: 600, lineHeight: 1.4, color: colors.liveCueText } }, cur?.text),
         cur && cur.breaths > 0 && React.createElement('p', { style: { fontSize: 14, color: colors.liveCueNext, marginTop: 8 } }, cur.breaths + ' breaths')
       ),
       next && React.createElement('p', { style: { fontSize: 15, color: colors.liveCueNext, textAlign: 'center' as const, opacity: 0.6 } }, next.text)
     ),
     // Ground Me overlay
-    showGround && React.createElement('div', { style: { position: 'absolute' as const, top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 32, zIndex: 10 } },
+    showGround && React.createElement('div', { style: { position: 'absolute' as const, top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(10,12,20,0.95)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 32, zIndex: 10 } },
       React.createElement('div', { style: { textAlign: 'center' as const } },
-        React.createElement('p', { style: { fontSize: 24, fontWeight: 600, lineHeight: 1.6, marginBottom: 24 } }, 'Take a breath.\nFeel your feet on the floor.\nYou are here.'),
+        React.createElement('p', { style: { fontSize: 24, fontWeight: 600, lineHeight: 1.6, marginBottom: 24, color: colors.liveCueText } }, 'Take a breath.\nFeel your feet on the floor.\nYou are here.'),
         React.createElement('button', { onClick: () => setShowGround(false), style: { padding: '12px 32px', borderRadius: 10, border: '1px solid ' + colors.liveAccent, backgroundColor: 'transparent', color: colors.liveAccent, fontSize: 16, cursor: 'pointer', fontFamily: 'inherit' } }, "I'm ready")
       )
     ),
     // AI drawer
-    showAI && React.createElement('div', { style: { backgroundColor: '#252540', borderTop: '1px solid #3a3a5c', padding: 16, maxHeight: 180, overflowY: 'auto' } },
+    showAI && React.createElement('div', { style: { backgroundColor: colors.surface, borderTop: '1px solid ' + colors.border, padding: 16, maxHeight: 180, overflowY: 'auto' } },
       React.createElement('h4', { style: { fontSize: 13, color: colors.liveCueNext, marginBottom: 8, fontWeight: 600 } }, 'AI Suggestions'),
-      ...AI_SUGGESTIONS.map((s, i) => React.createElement('div', { key: i, style: { backgroundColor: colors.liveBackground, borderRadius: 8, padding: 10, marginBottom: 6, border: '1px solid #3a3a5c' } },
-        React.createElement('p', { style: { fontSize: 13, margin: '0 0 4px 0' } }, s.text),
+      ...AI_SUGGESTIONS.map((s, i) => React.createElement('div', { key: i, style: { backgroundColor: colors.liveBackground, borderRadius: 8, padding: 10, marginBottom: 6, border: '1px solid ' + colors.border } },
+        React.createElement('p', { style: { fontSize: 13, margin: '0 0 4px 0', color: colors.liveCueText } }, s.text),
         React.createElement('span', { style: { fontSize: 11, color: colors.liveAccent } }, s.kind + ' \u2022 ' + Math.round(s.confidence * 100) + '%')
       ))
     ),
     // Controls
     React.createElement('div', { style: { padding: '12px 16px 28px', display: 'flex', gap: 8, alignItems: 'center' } },
-      React.createElement('button', { onClick: () => setIdx(Math.max(0, idx - 1)), style: { flex: 1, padding: '12px 0', borderRadius: 10, border: '1px solid #3a3a5c', backgroundColor: 'transparent', color: colors.liveCueText, fontSize: 18, cursor: 'pointer', fontFamily: 'inherit' } }, '\u2190'),
-      React.createElement('button', { onClick: () => setShowGround(true), style: { padding: '10px 14px', borderRadius: 10, border: '1px solid ' + colors.liveAccent, backgroundColor: 'rgba(124,154,130,0.15)', color: colors.liveAccent, fontSize: 12, cursor: 'pointer', fontWeight: 600, fontFamily: 'inherit' } }, 'Ground Me'),
-      React.createElement('button', { onClick: () => setShowAI(!showAI), style: { padding: '10px 14px', borderRadius: 10, border: '1px solid #9B7CB0', backgroundColor: 'rgba(155,124,176,0.15)', color: '#9B7CB0', fontSize: 12, cursor: 'pointer', fontWeight: 600, fontFamily: 'inherit' } }, 'AI'),
-      React.createElement('button', { onClick: () => setIdx(Math.min(CUES.length - 1, idx + 1)), style: { flex: 1, padding: '12px 0', borderRadius: 10, border: '1px solid #3a3a5c', backgroundColor: 'transparent', color: colors.liveCueText, fontSize: 18, cursor: 'pointer', fontFamily: 'inherit' } }, '\u2192')
+      React.createElement('button', { onClick: () => setIdx(Math.max(0, idx - 1)), style: { flex: 1, padding: '12px 0', borderRadius: 10, border: '1px solid ' + colors.border, backgroundColor: 'transparent', color: colors.liveCueText, fontSize: 18, cursor: 'pointer', fontFamily: 'inherit' } }, '\u2190'),
+      React.createElement('button', { onClick: () => setShowGround(true), style: { padding: '10px 14px', borderRadius: 10, border: '1px solid ' + colors.liveAccent, backgroundColor: 'rgba(196,144,122,0.12)', color: colors.liveAccent, fontSize: 12, cursor: 'pointer', fontWeight: 600, fontFamily: 'inherit' } }, 'Ground Me'),
+      React.createElement('button', { onClick: () => setShowAI(!showAI), style: { padding: '10px 14px', borderRadius: 10, border: '1px solid #9B7CB0', backgroundColor: 'rgba(155,124,176,0.12)', color: '#9B7CB0', fontSize: 12, cursor: 'pointer', fontWeight: 600, fontFamily: 'inherit' } }, 'AI'),
+      React.createElement('button', { onClick: () => setIdx(Math.min(CUES.length - 1, idx + 1)), style: { flex: 1, padding: '12px 0', borderRadius: 10, border: '1px solid ' + colors.border, backgroundColor: 'transparent', color: colors.liveCueText, fontSize: 18, cursor: 'pointer', fontFamily: 'inherit' } }, '\u2192')
     )
   );
 }
@@ -276,21 +300,21 @@ function MeditationModeScreen({ nav }: { nav: (s: string) => void }) {
   const prev = idx > 0 ? MED_CHUNKS[idx - 1] : null;
   const next = idx < MED_CHUNKS.length - 1 ? MED_CHUNKS[idx + 1] : null;
 
-  return React.createElement('div', { style: { height: '100%', backgroundColor: colors.surfaceAlt, display: 'flex', flexDirection: 'column' as const } },
+  return React.createElement('div', { style: { height: '100%', backgroundColor: colors.background, display: 'flex', flexDirection: 'column' as const } },
     React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '50px 16px 8px' } },
       React.createElement('button', { onClick: () => nav('Home'), style: { background: 'none', border: 'none', color: colors.textSecondary, cursor: 'pointer', fontSize: 14, fontFamily: 'inherit' } }, '\u2190 Exit'),
       React.createElement('span', { style: { fontSize: 12, color: colors.textTertiary } }, 'Grounding Meditation'),
       React.createElement('span', { style: { fontSize: 14, color: colors.primary, fontVariantNumeric: 'tabular-nums' } }, formatTime(elapsed))
     ),
     React.createElement('div', { style: { flex: 1, display: 'flex', flexDirection: 'column' as const, justifyContent: 'center', padding: '0 28px' } },
-      prev && React.createElement('p', { style: { fontSize: 15, color: colors.textTertiary, textAlign: 'center' as const, marginBottom: 32, opacity: 0.4 } }, prev.text),
+      prev && React.createElement('p', { style: { fontSize: 15, color: colors.textSecondary, textAlign: 'center' as const, marginBottom: 32, opacity: 0.4 } }, prev.text),
       React.createElement('p', { style: { fontSize: 22, fontWeight: 500, lineHeight: 1.6, color: colors.textPrimary, textAlign: 'center' as const, marginBottom: 32 } }, chunk?.text),
-      next && React.createElement('p', { style: { fontSize: 15, color: colors.textTertiary, textAlign: 'center' as const, opacity: 0.5 } }, next.text)
+      next && React.createElement('p', { style: { fontSize: 15, color: colors.textSecondary, textAlign: 'center' as const, opacity: 0.5 } }, next.text)
     ),
     React.createElement('div', { style: { padding: '12px 16px 28px', display: 'flex', gap: 12, alignItems: 'center', justifyContent: 'center' } },
-      React.createElement('button', { onClick: () => setIdx(Math.max(0, idx - 1)), style: { padding: '12px 24px', borderRadius: 10, border: '1px solid ' + colors.border, backgroundColor: colors.surface, fontSize: 18, cursor: 'pointer', fontFamily: 'inherit' } }, '\u2190'),
+      React.createElement('button', { onClick: () => setIdx(Math.max(0, idx - 1)), style: { padding: '12px 24px', borderRadius: 10, border: '1px solid ' + colors.border, backgroundColor: colors.surface, color: colors.textPrimary, fontSize: 18, cursor: 'pointer', fontFamily: 'inherit' } }, '\u2190'),
       React.createElement('span', { style: { fontSize: 13, color: colors.textSecondary, minWidth: 60, textAlign: 'center' as const } }, (idx + 1) + ' / ' + MED_CHUNKS.length),
-      React.createElement('button', { onClick: () => setIdx(Math.min(MED_CHUNKS.length - 1, idx + 1)), style: { padding: '12px 24px', borderRadius: 10, border: '1px solid ' + colors.border, backgroundColor: colors.surface, fontSize: 18, cursor: 'pointer', fontFamily: 'inherit' } }, '\u2192')
+      React.createElement('button', { onClick: () => setIdx(Math.min(MED_CHUNKS.length - 1, idx + 1)), style: { padding: '12px 24px', borderRadius: 10, border: '1px solid ' + colors.border, backgroundColor: colors.surface, color: colors.textPrimary, fontSize: 18, cursor: 'pointer', fontFamily: 'inherit' } }, '\u2192')
     )
   );
 }
@@ -310,20 +334,20 @@ function AIDraftingScreen() {
       setLoading(false);
     }, 1500);
   };
-  return React.createElement('div', { style: { height: '100%', overflowY: 'auto', padding: 16 } },
+  return React.createElement('div', { style: { height: '100%', overflowY: 'auto', padding: 16, backgroundColor: colors.background } },
     React.createElement('div', { style: { display: 'flex', borderRadius: 10, overflow: 'hidden', border: '1px solid ' + colors.border, marginBottom: 16 } },
       ...['sequence', 'meditation'].map(m => React.createElement('button', {
         key: m, onClick: () => { setMode(m); setResult(''); },
-        style: { flex: 1, padding: '10px 0', border: 'none', cursor: 'pointer', fontSize: 14, fontWeight: 500, fontFamily: 'inherit', backgroundColor: mode === m ? colors.primary : colors.surface, color: mode === m ? 'white' : colors.textSecondary }
+        style: { flex: 1, padding: '10px 0', border: 'none', cursor: 'pointer', fontSize: 14, fontWeight: 500, fontFamily: 'inherit', backgroundColor: mode === m ? colors.accent : colors.surface, color: mode === m ? '#EDE8DF' : colors.textSecondary }
       }, m === 'sequence' ? 'Generate Sequence' : 'Generate Meditation'))
     ),
     React.createElement('div', { style: { display: 'flex', gap: 6, flexWrap: 'wrap' as const, marginBottom: 10 } },
       ...chips.map(c => React.createElement('button', { key: c, onClick: () => setPrompt(c), style: { padding: '6px 12px', borderRadius: 16, border: '1px solid ' + colors.border, backgroundColor: colors.surface, fontSize: 12, color: colors.textSecondary, cursor: 'pointer', fontFamily: 'inherit' } }, c))
     ),
-    React.createElement('textarea', { value: prompt, onChange: (e: any) => setPrompt(e.target.value), placeholder: 'Describe the class you want to create...', style: { width: '100%', height: 80, padding: 12, borderRadius: 10, border: '1px solid ' + colors.border, fontSize: 14, resize: 'none' as const, fontFamily: 'inherit', backgroundColor: colors.surface, boxSizing: 'border-box' as const } }),
+    React.createElement('textarea', { value: prompt, onChange: (e: any) => setPrompt(e.target.value), placeholder: 'Describe the class you want to create...', style: { width: '100%', height: 80, padding: 12, borderRadius: 10, border: '1px solid ' + colors.border, fontSize: 14, resize: 'none' as const, fontFamily: 'inherit', backgroundColor: colors.surface, color: colors.textPrimary, boxSizing: 'border-box' as const } }),
     React.createElement('button', { onClick: generate, disabled: loading || !prompt, style: { ...btn(true), width: '100%', marginTop: 12, marginBottom: 16, opacity: loading || !prompt ? 0.5 : 1 } }, loading ? 'Generating...' : 'Generate'),
     result && React.createElement('div', { style: { backgroundColor: colors.surface, borderRadius: 12, padding: 16, border: '1px solid ' + colors.border } },
-      React.createElement('h4', { style: { fontSize: 14, fontWeight: 600, marginBottom: 8 } }, 'Result'),
+      React.createElement('h4', { style: { fontSize: 14, fontWeight: 600, marginBottom: 8, color: colors.textPrimary } }, 'Result'),
       React.createElement('pre', { style: { fontSize: 13, lineHeight: 1.6, color: colors.textSecondary, whiteSpace: 'pre-wrap' as const, fontFamily: 'inherit', margin: 0 } }, result),
       React.createElement('button', { style: { ...btn(true), width: '100%', marginTop: 12 } }, 'Save to Library')
     )
@@ -338,33 +362,33 @@ function SettingsScreen() {
     { title: 'Developer', desc: 'Reset demo data, clear cache, view logs.', icon: '\uD83D\uDD27' },
     { title: 'About', desc: 'FlowCue v0.1.0 \u2014 Built for yoga teachers, by a yoga teacher.', icon: '\uD83D\uDC9A' },
   ];
-  return React.createElement('div', { style: { height: '100%', overflowY: 'auto', padding: 16 } },
+  return React.createElement('div', { style: { height: '100%', overflowY: 'auto', padding: 16, backgroundColor: colors.background } },
     ...items.map(s => React.createElement('div', { key: s.title, style: card({ cursor: 'default' }) },
       React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 } },
         React.createElement('span', { style: { fontSize: 18 } }, s.icon),
-        React.createElement('h4', { style: { fontSize: 15, fontWeight: 600, margin: 0 } }, s.title)),
+        React.createElement('h4', { style: { fontSize: 15, fontWeight: 600, margin: 0, color: colors.textPrimary } }, s.title)),
       React.createElement('p', { style: { fontSize: 13, color: colors.textSecondary, lineHeight: 1.5, margin: 0 } }, s.desc)
     ))
   );
 }
 
 function BuilderScreen({ kind }: { kind: string }) {
-  return React.createElement('div', { style: { height: '100%', overflowY: 'auto', padding: 16 } },
+  return React.createElement('div', { style: { height: '100%', overflowY: 'auto', padding: 16, backgroundColor: colors.background } },
     React.createElement('div', { style: { marginBottom: 16 } },
       React.createElement('label', { style: { fontSize: 13, fontWeight: 500, color: colors.textSecondary, display: 'block', marginBottom: 4 } }, 'Title'),
-      React.createElement('input', { placeholder: 'My New ' + kind, style: { width: '100%', padding: 12, borderRadius: 10, border: '1px solid ' + colors.border, fontSize: 15, backgroundColor: colors.surface, fontFamily: 'inherit', boxSizing: 'border-box' as const } })
+      React.createElement('input', { placeholder: 'My New ' + kind, style: { width: '100%', padding: 12, borderRadius: 10, border: '1px solid ' + colors.border, fontSize: 15, backgroundColor: colors.surface, color: colors.textPrimary, fontFamily: 'inherit', boxSizing: 'border-box' as const } })
     ),
     React.createElement('div', { style: { display: 'flex', gap: 8, marginBottom: 16 } },
       React.createElement('div', { style: { flex: 1 } },
         React.createElement('label', { style: { fontSize: 13, fontWeight: 500, color: colors.textSecondary, display: 'block', marginBottom: 4 } }, kind === 'Sequence' ? 'Style' : 'Category'),
-        React.createElement('input', { placeholder: kind === 'Sequence' ? 'vinyasa' : 'grounding', style: { width: '100%', padding: 10, borderRadius: 10, border: '1px solid ' + colors.border, fontSize: 14, backgroundColor: colors.surface, fontFamily: 'inherit', boxSizing: 'border-box' as const } })
+        React.createElement('input', { placeholder: kind === 'Sequence' ? 'vinyasa' : 'grounding', style: { width: '100%', padding: 10, borderRadius: 10, border: '1px solid ' + colors.border, fontSize: 14, backgroundColor: colors.surface, color: colors.textPrimary, fontFamily: 'inherit', boxSizing: 'border-box' as const } })
       ),
       React.createElement('div', { style: { flex: 1 } },
         React.createElement('label', { style: { fontSize: 13, fontWeight: 500, color: colors.textSecondary, display: 'block', marginBottom: 4 } }, 'Duration (min)'),
-        React.createElement('input', { placeholder: '60', type: 'number', style: { width: '100%', padding: 10, borderRadius: 10, border: '1px solid ' + colors.border, fontSize: 14, backgroundColor: colors.surface, fontFamily: 'inherit', boxSizing: 'border-box' as const } })
+        React.createElement('input', { placeholder: '60', type: 'number', style: { width: '100%', padding: 10, borderRadius: 10, border: '1px solid ' + colors.border, fontSize: 14, backgroundColor: colors.surface, color: colors.textPrimary, fontFamily: 'inherit', boxSizing: 'border-box' as const } })
       )
     ),
-    React.createElement('textarea', { placeholder: kind === 'Sequence' ? 'Describe your class...' : 'Write your meditation script here...', style: { width: '100%', height: kind === 'Sequence' ? 60 : 150, padding: 12, borderRadius: 10, border: '1px solid ' + colors.border, fontSize: 14, resize: 'none' as const, fontFamily: 'inherit', backgroundColor: colors.surface, boxSizing: 'border-box' as const, marginBottom: 16 } }),
+    React.createElement('textarea', { placeholder: kind === 'Sequence' ? 'Describe your class...' : 'Write your meditation script here...', style: { width: '100%', height: kind === 'Sequence' ? 60 : 150, padding: 12, borderRadius: 10, border: '1px solid ' + colors.border, fontSize: 14, resize: 'none' as const, fontFamily: 'inherit', backgroundColor: colors.surface, color: colors.textPrimary, boxSizing: 'border-box' as const, marginBottom: 16 } }),
     React.createElement('button', { style: { ...btn(true), width: '100%' } }, 'Save ' + kind)
   );
 }
@@ -404,7 +428,7 @@ function App() {
     { screen: 'Settings', icon: '\u2699\uFE0F', label: 'Settings' },
   ];
 
-  return React.createElement('div', { style: { width: 390, height: 844, backgroundColor: colors.background, borderRadius: 40, overflow: 'hidden', border: '6px solid #2D2D2D', display: 'flex', flexDirection: 'column' as const, boxShadow: '0 10px 40px rgba(0,0,0,0.25)' } },
+  return React.createElement('div', { style: { width: 390, height: 844, backgroundColor: colors.background, borderRadius: 40, overflow: 'hidden', border: '6px solid ' + colors.surfaceAlt, display: 'flex', flexDirection: 'column' as const, boxShadow: '0 10px 40px rgba(0,0,0,0.5)' } },
     showHeader && React.createElement('div', { style: { display: 'flex', alignItems: 'center', padding: '50px 16px 10px', backgroundColor: colors.background, borderBottom: '1px solid ' + colors.border, minHeight: 44 } },
       history.length > 1 ? React.createElement('button', { onClick: back, style: { background: 'none', border: 'none', color: colors.primary, cursor: 'pointer', fontSize: 14, fontWeight: 500, marginRight: 8, fontFamily: 'inherit' } }, '\u2190 Back') : React.createElement('div', { style: { width: 50 } }),
       React.createElement('span', { style: { flex: 1, textAlign: 'center' as const, fontSize: 17, fontWeight: 600, color: colors.textPrimary } }, TITLES[current]),
@@ -417,7 +441,7 @@ function App() {
         style: { flex: 1, display: 'flex', flexDirection: 'column' as const, alignItems: 'center', gap: 2, background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0' }
       },
         React.createElement('span', { style: { fontSize: 20 } }, tab.icon),
-        React.createElement('span', { style: { fontSize: 11, color: current === tab.screen ? colors.primary : colors.textTertiary, fontWeight: current === tab.screen ? 600 : 400 } }, tab.label)
+        React.createElement('span', { style: { fontSize: 11, color: current === tab.screen ? colors.primary : colors.textSecondary, fontWeight: current === tab.screen ? 600 : 400 } }, tab.label)
       ))
     )
   );
